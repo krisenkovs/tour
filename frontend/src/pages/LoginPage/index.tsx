@@ -1,47 +1,37 @@
-import {FC, useContext} from "react";
-import {Button, Col, Form, Input, notification, Row, Typography} from "antd";
-import {AuthContext} from "../../components/AuthProvider";
-import styles from './index.module.css';
+import React, { useState } from 'react';
 
-export const LoginPage: FC = () => {
-  const [form] = Form.useForm();
+import styles from './styles.module.css';
+import { Input } from 'components/Input';
+import { Button } from 'components/Button';
+import { applicationStore } from 'application/store';
+import { observer } from 'mobx-react';
+import { useObserveSuccess } from 'helpers';
+import { useHistory } from 'react-router';
 
-  const authContext = useContext(AuthContext);
+export const LoginPage = observer(() => {
+  const [email, setEmail] = useState<string | undefined>();
+  const [password, setPassword] = useState<string | undefined>();
+  const { replace } = useHistory();
 
-  const handleClick = () => {
-    form.validateFields().then(async values => {
-      const response = await fetch('/auth/login', {
-        method: 'post', body: JSON.stringify(values), headers: {
-          'Content-Type': 'application/json'
-        },
-      });
+  useObserveSuccess(applicationStore.loginPromise, () => replace('/'));
 
-      const data = await response.json();
-      if (response.status === 200) {
-        authContext?.login(data?.access_token);
-      } else {
-        notification.error({message: data?.message})
-      }
-    })
+  function handleClick() {
+    applicationStore.login(email, password);
   }
 
-  return <Row className={styles.container} align='middle'>
-    <Col span={8}/>
-    <Col flex={1}><Form form={form} layout='vertical' validateMessages={{required:'Поле обязательно для заполнения'}}>
-      <Form.Item noStyle>
-        <Typography.Title level={2}>Вход</Typography.Title><br/>
-      </Form.Item>
-    <Form.Item name='login' label='Имя пользователя' rules={[{required: true}]}>
-      <Input maxLength={50}/>
-    </Form.Item>
-    <Form.Item name='password' label='Пароль' rules={[{required: true}]}>
-      <Input.Password maxLength={50}/>
-    </Form.Item>
-    <Form.Item noStyle>
-      <Button type='primary' onClick={handleClick}>Войти</Button>
-    </Form.Item>
-  </Form>
-  </Col>
-    <Col span={8}/>
-  </Row>
-}
+  return (
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <span className={styles.title}>Войти</span>
+        <Input label="пользователь" value={email} onChange={setEmail} />
+        <Input label="пароль" type="password" value={password} onChange={setPassword} />
+        <Button
+          onClick={handleClick}
+          label="Войти"
+          disabled={!email || !password}
+          loading={applicationStore?.loginPromise?.pending}
+        />
+      </div>
+    </div>
+  );
+});

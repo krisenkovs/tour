@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build:front": "cd frontend && yarn install && yarn build",
-    "build:back": "cd backend && yarn instali && yarn build build",
+    "build:back": "cd backend && yarn install && yarn build build",
     "build:copy": "cpx \"frontend/build/**\" backend/dist/build",
     "build": "yarn build:front && yarn build:back && yarn build:copy && rimraf node_modules",
     "start": "cd backend && yarn start:prod"
