@@ -7,8 +7,9 @@ import {
   Get,
   Delete,
   Param,
-  Post, HttpCode
-} from "@nestjs/common";
+  Post,
+  HttpCode,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 

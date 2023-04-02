@@ -8,14 +8,15 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Tour } from './tour.entity';
+import { Hotel } from 'src/hotel.entity';
 
 @Entity('order')
 export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Tour)
-  tour: Tour;
+  @ManyToOne(() => Hotel)
+  hotel: Hotel;
 
   @ManyToOne(() => User)
   user: User;
@@ -24,5 +25,11 @@ export class Order {
   persons: number;
 
   @Column()
-  days: number;
+  price: number;
+
+  @Column()
+  startDate: string;
+
+  @Column()
+  endDate: string;
 }

@@ -8,14 +8,13 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('auth/login')
+  @Post('api/login')
   @HttpCode(200)
   async login(@Body() body) {
     return this.authService.login(body);

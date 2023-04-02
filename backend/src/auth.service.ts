@@ -10,8 +10,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(request: { login: string; password: string }) {
-    const user = await this.usersService.findOne(request.login);
+  async login(request: { email: string; password: string }) {
+    const user = await this.usersService.findOne(request.email);
     if (!user || user.password !== request.password) {
       throw new HttpException(
         'Неверное имя пользователя или пароль',
@@ -19,21 +19,21 @@ export class AuthService {
       );
     }
     return {
-      access_token: this.jwtService.sign({
+      token: this.jwtService.sign({
         id: user.id,
-        login: user.login,
+        email: user.email,
       }),
     };
   }
 
   async register(request: {
-    login: string;
+    email: string;
     password: string;
     passwordConfirm: string;
     firstName?: string;
     lastName?: string;
   }) {
-    const user = await this.usersService.findOne(request.login);
+    const user = await this.usersService.findOne(request.email);
     if (user) {
       throw new HttpException(
         'Пользователь уже существует',
@@ -46,9 +46,8 @@ export class AuthService {
     }
 
     const { password, ...rest } = await this.usersService.create({
-      login: request.login,
+      email: request.email,
       password: request.password,
-      role: 'USER',
       firstName: request.firstName,
       lastName: request.lastName,
     } as User);

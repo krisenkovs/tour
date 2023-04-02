@@ -9,8 +9,8 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  findOne(login: string): Promise<User> {
-    return this.userRepository.findOne({ login: login });
+  findOne(email: string): Promise<User> {
+    return this.userRepository.findOne({ email: email });
   }
 
   create(user: User): Promise<User> {
