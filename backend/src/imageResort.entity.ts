@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Resort } from 'src/resort.entity';
+import { Resort } from './resort.entity';
 
 @Entity('image_resort')
 export class ImageResort {

@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Tour } from './tour.entity';
-import { Hotel } from 'src/hotel.entity';
+import { Hotel } from './hotel.entity';
 
 @Entity('order')
 export class Order {
