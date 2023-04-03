@@ -28,7 +28,7 @@ import { CountryController } from './country.controller';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'build'),
+      rootPath: join(__dirname, '..','build'),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
