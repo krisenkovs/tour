@@ -1,27 +1,43 @@
-import { applicationStore } from 'application/store';
 import { observer } from 'mobx-react';
 import React from 'react';
-import styles from './styles.module.css';
-import { Header } from 'application/components/Header';
-import { Menu } from 'application/components/Menu';
-import { Footer } from 'application/components/Footer';
+import { Footer } from 'application/Footer';
+import { Header } from 'application/Header';
 import { Redirect, Route, Switch } from 'react-router';
-import { LoginPage } from 'pages/LoginPage';
-import { CountriesPage } from 'pages/CountriesPage';
+import { TourPage } from 'pages/TourPage';
+import { LoginDialog } from 'application/LoginDialog';
+import { ProtectedRoute } from 'components/ProtectedRoute';
+import { CountriesPage } from 'pages/Admin/CountriesPage';
+import { useObserveError, useObserveSuccess } from 'helpers';
+import { applicationStore } from 'application/store';
+import { HotelsPage } from 'pages/Admin/HotelsPage';
+import { ToursPage } from 'pages/Admin/ToursPage';
+import {OrdersPage} from "pages/Admin/OrdersPage";
 
 export const Application = observer(() => {
+  useObserveSuccess(applicationStore.logoutPromise, () => {
+    console.log('reaction');
+    applicationStore.setLoginToken('');
+  });
+  useObserveError(applicationStore.logoutPromise);
+
   return (
-    <div className={styles.container}>
-      <Header />
-      <Menu />
-      <div className={styles.content}>
-        <Switch>
-          {!applicationStore?.isLogin && <Route path="/admin" component={LoginPage} />}
-          <Route path="/countries" component={CountriesPage} />
-          <Redirect to="/" />
-        </Switch>
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+        <Header />
+        <div style={{ flex: 1, flexDirection: 'column', overflow: 'auto', display: 'flex' }}>
+          <Switch>
+            <Route path="/tours" component={TourPage} />
+            <Route path="/hot" render={() => <TourPage hot />} />
+            <ProtectedRoute path="/admin-countries" component={CountriesPage} />
+            <ProtectedRoute path="/admin-hotels" component={HotelsPage} />
+            <ProtectedRoute path="/admin-tours" component={ToursPage} />
+						<ProtectedRoute path="/admin-orders" component={OrdersPage} />
+            <Redirect to="/tours" />
+          </Switch>
+          <Footer />
+        </div>
       </div>
-      <Footer />
-    </div>
+      <LoginDialog />
+    </>
   );
 });

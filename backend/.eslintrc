@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "complexity": ["warn", 20],
+    "import/named": "off",
+    "import/no-unresolved": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "no-restricted-globals": "warn",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  },
+  "plugins": [ "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ]
+}

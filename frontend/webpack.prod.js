@@ -18,16 +18,6 @@ module.exports = merge(common, {
       minChunks: 1,
       maxAsyncRequests: 15,
       maxInitialRequests: 30,
-      //maxSize:112000,
-      cacheGroups: {
-        common: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            return `npm.${packageName.replace('@', '')}`;
-          },
-        },
-      },
     },
   },
 });

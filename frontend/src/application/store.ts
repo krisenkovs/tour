@@ -1,9 +1,9 @@
+import { action, makeObservable, observable } from 'mobx';
 import { fromPromise, httpService, PromiseObserver } from 'helpers';
-import { action, makeObservable, observable, reaction } from 'mobx';
 
 class Store {
   isLogin = false;
-  loginPromise?: PromiseObserver<{ token: string }> = undefined;
+  logoutPromise?: PromiseObserver<{ token: string }> = undefined;
 
   constructor() {
     if (localStorage.getItem('token')) {
@@ -11,21 +11,25 @@ class Store {
     }
 
     makeObservable(this, {
-      loginPromise: observable,
-      login: action.bound,
+      isLogin: observable,
+      logoutPromise: observable,
+      setLoginToken: action.bound,
+      logout: action.bound,
     });
-
-    reaction(
-      () => this.loginPromise?.value,
-      (value) => {
-        this.isLogin = !!this.loginPromise?.value?.token;
-        localStorage.setItem('token', this.loginPromise?.value?.token || '');
-      },
-    );
   }
 
-  login(email?: string, password?: string) {
-    this.loginPromise = fromPromise(httpService.post('api/login', { email, password }));
+  setLoginToken(token?: string) {
+    if (token) {
+      this.isLogin = true;
+      localStorage.setItem('token', token);
+    } else {
+      this.isLogin = false;
+      localStorage.removeItem('token');
+    }
+  }
+
+  logout() {
+    this.logoutPromise = fromPromise(httpService.post('/logout', {}));
   }
 }
 

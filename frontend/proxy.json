@@ -1,8 +1,9 @@
-{
-  "/api": {
+[
+  {
+    "context": ["/api", "/login", "/logout", "/country", "/tours/find", "/order/create"],
     "target": "http://localhost:3100",
     "changeOrigin": true,
     "ws": true,
     "secure": false
   }
-}
+]
