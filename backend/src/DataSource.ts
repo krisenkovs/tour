@@ -7,7 +7,7 @@ import { TourEntity } from './TourEntity';
 import { OrderEntity } from './OrderEntity';
 
 export const AppDataSource = new DataSource({
-  type: 'sqllite',
+  type: 'sqlite',
   //host: 'dpg-cgk89om4dad69r1a4pgg-a.oregon-postgres.render.com',
   //port: 5432,
   //username: 'tour_9t08_user',
