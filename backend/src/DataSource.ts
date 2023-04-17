@@ -14,10 +14,10 @@ export const AppDataSource = new DataSource({
   //password: 'q57IRp1tW7eUaKCJGcdim3opGdWQWVs0',
   //database: 'tour_9t08',
 
-  //synchronize: true,
+  synchronize: true,
   //ssl: true,
   logging: 'all',
-  databese:'db.db',
+  database: 'db.db', 
   //extra: {
     //ssl: {
       //rejectUnauthorized: false,
