@@ -26,6 +26,8 @@ export const EditDialog = observer(() => {
   function handleFinish() {
     form.validateFields().then(() => {
       const values = form.getFieldsValue(true);
+
+      console.log(values);
       if (values?.id) {
         store.save(values);
       } else {

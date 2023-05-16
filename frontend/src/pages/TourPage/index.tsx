@@ -30,6 +30,7 @@ export const TourPage = observer(({ hot }: Props) => {
 
   useEffect(() => {
     form.setFieldsValue({ hot });
+    findTours(form.getFieldsValue());
     loadCountries();
     return clear;
   }, [hot]);
@@ -97,14 +98,13 @@ export const TourPage = observer(({ hot }: Props) => {
 
                     <Descriptions column={2}>
                       <Descriptions.Item label="Максимально человек">{item?.mens}</Descriptions.Item>
-                      <Descriptions.Item label="Просто параметр">Значение</Descriptions.Item>
                     </Descriptions>
                   </Space>
                 </Col>
                 <Col>
                   <Space direction="vertical">
                     <Statistic title="Цена за ночь" value={item?.price} />
-                    <Button type="primary" onClick={()=>orderDialogStore.show(item)}>
+                    <Button type="primary" onClick={() => orderDialogStore.show(item)}>
                       Заказать
                     </Button>
                   </Space>

@@ -1,6 +1,7 @@
 const { resolve, join } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const pkg = require('./package.json');
 
 const outputFolderPath = resolve(__dirname, 'build');
@@ -86,6 +87,14 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `css/[name].${pkg.version}.css`,
       chunkFilename: `css/[id].${pkg.version}.css`,
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve(__dirname, 'public/images'),
+          to: 'images',
+        },
+      ],
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

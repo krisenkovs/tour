@@ -9,7 +9,7 @@ type Props = {
 
 export function DateInput({ value, onChange }: Props) {
   function handleChange(value: Moment | null) {
-    onChange?.(value ? value.toISOString() : '');
+    onChange?.(value ? value.format('YYYY-MM-DD') : '');
   }
 
   return (
