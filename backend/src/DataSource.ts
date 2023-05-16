@@ -16,7 +16,7 @@ export const AppDataSource = new DataSource({
 
   synchronize: true,
   ssl: true,
-  //logging: 'all',
+  logging: 'all',
   extra: {
     ssl: {
       rejectUnauthorized: false,
